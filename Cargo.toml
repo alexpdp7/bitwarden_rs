@@ -1,6 +1,6 @@
 [package]
 name = "bitwarden_rs"
-version = "1.0.0"
+version = "1.17.0"
 authors = ["Daniel García <dani-garcia@users.noreply.github.com>"]
 edition = "2018"
 
@@ -9,6 +9,7 @@ readme = "README.md"
 license = "GPL-3.0-only"
 publish = false
 build = "build.rs"
+description = "foo"
 
 [features]
 # Empty to keep compatibility, prefer to set USE_SYSLOG=true
@@ -135,3 +136,12 @@ rocket_contrib = { git = 'https://github.com/SergioBenitez/Rocket', rev = '1010f
 
 # For favicon extraction from main website
 data-url = { git = 'https://github.com/servo/rust-url', package="data-url", rev = '7f1bd6ce1c2fde599a757302a843a60e714c5f72' }
+
+[package.metadata.rpm.cargo]
+buildflags = ["--release", "--features=sqlite"]
+
+[package.metadata.rpm.targets]
+bitwarden_rs = { path = "/usr/bin/bitwarden_rs" }
+
+[package.metadata.rpm.files]
+"bitwarden_rs.service" = { path = "/usr/lib/systemd/system/bitwarden_rs.service" }
